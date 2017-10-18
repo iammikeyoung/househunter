@@ -1,0 +1,22 @@
+# dotenv
+.env
+
+# Ignore uploaded files in test & development
+/public/uploads
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+/node_modules
+/yarn-error.log
+
+.byebug_history
+
+# Additional files
+.rspec
