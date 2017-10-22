@@ -18,6 +18,7 @@ group :development, :test do
   gem 'launchy', require: false
   gem 'valid_attribute'
   gem 'shoulda'
+  gem 'rails-controller-testing'
 end
 
 group :development do
