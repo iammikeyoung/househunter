@@ -13,5 +13,5 @@ feature 'my welcome page' do
       expect(page).to have_content("Log In")
       expect(page).to have_content("Sign up now!")
     end
-    
+
 end
