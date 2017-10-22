@@ -10,6 +10,8 @@ describe User do
     user = User.new
     user.email = "name@example.com"
     expect(user).to_not be_valid
+    user.email = user.email.upcase
+    expect(user).to_not be_valid
   end
 
   it "is valid with valid attributes"
