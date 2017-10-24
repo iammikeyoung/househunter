@@ -29,6 +29,7 @@ feature "User Sign Up", %{
     expect(page).to have_content('Password (8 characters minimum)')
     expect(page).to have_content('Confirmation')
     # expect(page).to have_content('Profile Picture')
+    expect(page).to have_content('Cancel')
   end
 
   scenario "user provides invalid email & password information" do

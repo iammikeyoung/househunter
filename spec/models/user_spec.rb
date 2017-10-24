@@ -3,8 +3,6 @@ require 'rails_helper'
 describe User do
   # it { should have_many :portfolios }
 
-  it "is valid with valid attributes"
-
   it { should have_valid(:email).when("name@example.com") }
   it { should_not have_valid(:email).when(nil, "") }
   it "does not allow duplicate emails in user table" do
