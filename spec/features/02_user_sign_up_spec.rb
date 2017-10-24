@@ -27,42 +27,44 @@ feature "User Sign Up", %{
     expect(page).to have_content('Last Name')
     expect(page).to have_content('Email')
     expect(page).to have_content('Password (8 characters minimum)')
-    expect(page).to have_content('Password Confirmation')
+    expect(page).to have_content('Confirmation')
     # expect(page).to have_content('Profile Picture')
   end
 
   scenario "user provides invalid email & password information" do
     visit root_path
     click_link 'Sign Up'
-    click_button 'Sign up'
+    click_button 'Create Account'
 
-    expect(page).to have_content("4 errors prohibited this user from being saved:")
-    expect(page).to have_content("First name can't be blank")
-    expect(page).to have_content("Last name can't be blank")
+    expect(page).to have_content("errors prohibited this user from being saved:")
+    # expect(page).to have_content("First Name can't be blank")
+    # expect(page).to have_content("Last Name can't be blank")
     expect(page).to have_content("Email can't be blank")
     expect(page).to have_content("Password can't be blank")
   end
 
-  scenario "password fields do not match" do
+  scenario "password fields do not match & email format incorrect" do
     visit root_path
     click_on "Sign Up"
 
-    fill_in "First Name", with: "Joe"
-    fill_in "Last Name", with: "Shmoe"
-    fill_in "Email", with: "name@email.com"
-    fill_in "Password", with: "supersecret"
-    fill_in "Password confirmation", with: "different"
-    click_on "Sign up"
+    fill_in "First Name",     with: "Joe"
+    fill_in "Last Name",      with: "Shmoe"
+    fill_in "Email",          with: "name@emailcom"
+    fill_in "Password",       with: "supersecret"
+    fill_in "Confirmation",   with: "different"
+    click_on "Create Account"
 
+    expect(page).to have_content "Email is invalid"
     expect(page).to have_content "Password confirmation doesn't match Password"
   end
 
   scenario "email is already registered" do
     existing_user = User.create(
-    first_name: "Joe",
-    last_name: "Schmoe",
-    email: "email@email.com",
-    password: "passwordsecret"
+      first_name: "Joe",
+      last_name: "Schmoe",
+      email: "joe@email.com",
+      password: "passwordsecret",
+      password_confirmation: "passwordsecret"
     )
 
     visit root_path
@@ -72,8 +74,8 @@ feature "User Sign Up", %{
     fill_in "Last Name", with: existing_user.last_name
     fill_in "Email", with: existing_user.email
     fill_in "Password", with: existing_user.password
-    fill_in "Password confirmation", with: existing_user.password
-    click_on "Sign up"
+    fill_in "Confirmation", with: existing_user.password
+    click_on "Create Account"
 
     expect(page).to have_content "Email has already been taken"
   end
@@ -86,11 +88,12 @@ feature "User Sign Up", %{
     fill_in 'Last Name', with: 'Stark'
     fill_in 'Email', with: 'arya@winterfell.com'
     fill_in 'Password', with: 'HouseStark4Ever'
-    fill_in 'Password Confirmation', with: 'HouseStark4Ever'
-    click_button 'Sign up'
+    fill_in 'Confirmation', with: 'HouseStark4Ever'
+    click_button 'Create Account'
 
-    expect(page).to have_content("Welcome! You have signed up successfully.")
+    expect(page).to have_content("You have signed up successfully.")
     expect(page).to have_content("User's Homepage")
+    expect(page).to have_content("Welcome Arya! You have signed up successfully.")
   end
 
 
