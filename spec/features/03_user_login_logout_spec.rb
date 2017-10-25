@@ -27,11 +27,11 @@ feature "User Log In", %{
 
     visit root_path
     click_link 'Log In'
-    fill_in "email",    with: "joe_schmoe@email.com"
-    fill_in "password", with: "supersecret"
+    fill_in "Email",    with: "joe_schmoe@email.com"
+    fill_in "Password", with: "supersecret"
     click_button "Log In"
 
-    expect(page).to have_content("error message")
+    expect(page).to have_content("That email is not registered")
     expect(page).to have_current_path("/login")
   end
 
@@ -40,13 +40,19 @@ feature "User Log In", %{
     # [ ] User remains on login page
     # [ ] User remains unauthenticated
 
+    user = User.create!(email: "duchess@example.gov",
+                        password: "sploosh1",
+                        password_confirmation: "sploosh1",
+                        first_name: "Sterling",
+                        last_name: "Archer")
+
     visit root_path
     click_link 'Log In'
-    fill_in "email",    with: "duchess@example.gov"
-    fill_in "password", with: "incorrect"
+    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Password", with: "incorrect"
     click_button "Log In"
 
-    expect(page).to have_content("error message")
+    expect(page).to have_content("Invalid email/password combination")
     expect(page).to have_current_path("/login")
   end
 
@@ -57,14 +63,20 @@ feature "User Log In", %{
     # [ ] Login button is no longer available
     # [ ] Logout button is available
 
+    user = User.create!(email: "duchess@example.gov",
+                        password: "sploosh1",
+                        password_confirmation: "sploosh1",
+                        first_name: "Sterling",
+                        last_name: "Archer")
+
     visit root_path
     click_link 'Log In'
-    fill_in "email",    with: "duchess@example.gov"
-    fill_in "password", with: "sploosh"
+    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Password", with: "sploosh1"
     click_button "Log In"
 
     expect(page).to have_content("You have successful logged in")
-    expect(page).to have_current_path("/user/user-id")
+    expect(page).to have_current_path("/user/user.id")
   end
 end
 

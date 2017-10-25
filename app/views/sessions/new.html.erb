@@ -1,2 +1,18 @@
-<h1>Sessions#new</h1>
-<p>Find me in app/views/sessions/new.html.erb</p>
+<% provide(:title, "Log In") %>
+
+<%= flash[:notice] %>
+<h1>Log In</h1>
+
+<%= form_for(:session, url: login_path) do |f| %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+
+  <%= f.label :password %>
+  <%= f.email_field :password %>
+
+  <%= f.submit "Log In" %>
+
+<% end %>
+
+<%= link_to "Cancel", welcome_index_path %>
