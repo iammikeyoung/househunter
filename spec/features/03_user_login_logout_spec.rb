@@ -51,7 +51,7 @@ feature "User Log In", %{
   end
 
 
-  scenario "Login successful"
+  scenario "Login successful" do
     # [ ] Confirmation message that my account has been logged into
     # [ ] User is directed to user page
     # [ ] Login button is no longer available
@@ -66,6 +66,7 @@ feature "User Log In", %{
     expect(page).to have_content("You have successful logged in")
     expect(page).to have_current_path("/user/user-id")
   end
+end
 
 feature "User Log Out", %{
   As an authenticated user
