@@ -75,8 +75,8 @@ feature "User Log In", %{
     fill_in "Password", with: "sploosh1"
     click_button "Log In"
 
-    expect(page).to have_content("You have successful logged in")
-    expect(page).to have_current_path("/user/user.id")
+    expect(page).to have_content("You have successfully logged in")
+    expect(page).to have_current_path("/users/#{user.id}")
   end
 end
 
