@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "User Updates Account". %{
+feature "User Updates Account", %{
   As an authenticated user
   I want to update my information
   So that I can keep my profile info correct
