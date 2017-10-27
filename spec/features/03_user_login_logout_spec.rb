@@ -93,6 +93,28 @@ feature "User Log Out", %{
 
 } do
 
-  scenario "user successfully logout"
+  scenario "user successfully logout" do
+    user = User.create!(email: "duchess@example.gov",
+                        password: "sploosh1",
+                        password_confirmation: "sploosh1",
+                        first_name: "Sterling",
+                        last_name: "Archer")
+
+    visit root_path
+    click_link 'Log In'
+    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Password", with: "sploosh1"
+    click_button "Log In"
+    expect(page).to have_content("You have successfully logged in")
+    expect(page).to have_current_path("/users/#{user.id}")
+
+    click_link 'Log Out'
+
+    expect(page).to have_current_path("/")
+    expect(page).to have_content("You have successfully logged out")
+    expect(page).to have_link("Log In")
+    expect(page).to have_link("Sign Up")
+    expect(page).to_not have_link("Log Out")
+  end
 
 end
