@@ -12,9 +12,50 @@ feature "User Updates Account", %{
 
 } do
 
-  scenario "user enters invalid information"
+  scenario "authenticated user enters invalid information" do
+    user = User.create!(email: "duchess@example.gov",
+                        password: "sploosh1",
+                        password_confirmation: "sploosh1",
+                        first_name: "Sterling",
+                        last_name: "Archer")
 
-  scenario "user enters valid information"
+    visit root_path
+    click_link 'Log In'
+    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Password", with: "sploosh1"
+    click_button "Log In"
+    expect(page).to have_link("Update")
+    click_link 'Update'
+
+
+    fill_in "Email", with: ""
+
+    expect(page).to have_current_path("users/#{user.id}/edit")
+    expect(page).to have_content "Email is invalid"
+  end
+
+  scenario "authenticated user enters valid information" do
+    user = User.create!(email: "duchess@example.gov",
+                        password: "sploosh1",
+                        password_confirmation: "sploosh1",
+                        first_name: "Sterling",
+                        last_name: "Archer")
+
+    visit root_path
+    click_link 'Log In'
+    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Password", with: "sploosh1"
+    click_button "Log In"
+    expect(page).to have_link("Update")
+    click_link 'Update'
+
+
+    fill_in "First Name", with: "Mr."
+
+    expect(page).to have_current_path("users/#{user.id}")
+    expect(page).to have_content("Your account has been updated!")
+    expect(page).to have_content("Mr.")
+  end
 
 end
 
@@ -32,6 +73,6 @@ feature "User Deletes Account", %{
 
 } do
 
-  scenario "user successfully deletes account"
+  scenario "authenticated user successfully deletes account"
 
 end
