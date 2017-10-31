@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   before_save { self.email = email.downcase }
 
+  has_many :houses
+
   has_secure_password
 
   validates :first_name,  length: { maximum: 25 }
