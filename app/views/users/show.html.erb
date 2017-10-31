@@ -10,9 +10,10 @@
   </div>
   <div class="top-bar-right">
     <ul class="menu">
-      <li><a href="#">Home</a></li>
       <li><%= link_to "Home", user_path(current_user) %></li>
-      <li><%= link_to "Edit Account", '#' %></li>
+      <li><%= link_to "Update", edit_user_path(current_user) %></li>
+      <li><%= link_to "Delete", user_path(current_user),  method: :delete,
+                                                          data: { confirm: "You sure?" } %></li>
       <li><%= link_to "Log Out", logout_path, method: :delete %></li>
     </ul>
   </div>

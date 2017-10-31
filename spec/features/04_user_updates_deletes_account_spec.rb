@@ -29,8 +29,9 @@ feature "User Updates Account", %{
 
 
     fill_in "Email", with: ""
+    click_button "Update Account"
 
-    expect(page).to have_current_path("users/#{user.id}/edit")
+    expect(page).to have_current_path("/users/#{user.id}")
     expect(page).to have_content "Email is invalid"
   end
 
@@ -51,9 +52,10 @@ feature "User Updates Account", %{
 
 
     fill_in "First Name", with: "Mr."
+    click_button "Update Account"
 
-    expect(page).to have_current_path("users/#{user.id}")
-    expect(page).to have_content("Your account has been updated!")
+    expect(page).to have_current_path("/users/#{user.id}")
+    expect(page).to have_content("Profile updated")
     expect(page).to have_content("Mr.")
   end
 
