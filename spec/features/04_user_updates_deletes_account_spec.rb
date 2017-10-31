@@ -75,6 +75,23 @@ feature "User Deletes Account", %{
 
 } do
 
-  scenario "authenticated user successfully deletes account"
+  scenario "authenticated user successfully deletes account" do
+    user = User.create!(email: "duchess@example.gov",
+                        password: "sploosh1",
+                        password_confirmation: "sploosh1",
+                        first_name: "Sterling",
+                        last_name: "Archer")
+
+    visit root_path
+    click_link 'Log In'
+    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Password", with: "sploosh1"
+    click_button "Log In"
+    expect(page).to have_link("Delete")
+    click_link 'Delete'
+
+    expect(page).to have_current_path("/")
+    expect(page).to have_content("User deleted")
+  end
 
 end
