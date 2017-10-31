@@ -40,7 +40,7 @@ feature "User Log In", %{
     # [ ] User remains on login page
     # [ ] User remains unauthenticated
 
-    user = User.create!(email: "duchess@example.gov",
+    user = User.create!(email: "archer@example.gov",
                         password: "sploosh1",
                         password_confirmation: "sploosh1",
                         first_name: "Sterling",
@@ -48,7 +48,7 @@ feature "User Log In", %{
 
     visit root_path
     click_link 'Log In'
-    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Email",    with: "archer@example.gov"
     fill_in "Password", with: "incorrect"
     click_button "Log In"
 
@@ -63,7 +63,7 @@ feature "User Log In", %{
     # [ ] Login button is no longer available
     # [ ] Logout button is available
 
-    user = User.create!(email: "duchess@example.gov",
+    user = User.create!(email: "archer@example.gov",
                         password: "sploosh1",
                         password_confirmation: "sploosh1",
                         first_name: "Sterling",
@@ -71,7 +71,7 @@ feature "User Log In", %{
 
     visit root_path
     click_link 'Log In'
-    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Email",    with: "archer@example.gov"
     fill_in "Password", with: "sploosh1"
     click_button "Log In"
 
@@ -94,7 +94,7 @@ feature "User Log Out", %{
 } do
 
   scenario "user successfully logout" do
-    user = User.create!(email: "duchess@example.gov",
+    user = User.create!(email: "archer@example.gov",
                         password: "sploosh1",
                         password_confirmation: "sploosh1",
                         first_name: "Sterling",
@@ -102,7 +102,7 @@ feature "User Log Out", %{
 
     visit root_path
     click_link 'Log In'
-    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Email",    with: "archer@example.gov"
     fill_in "Password", with: "sploosh1"
     click_button "Log In"
     expect(page).to have_content("You have successfully logged in")

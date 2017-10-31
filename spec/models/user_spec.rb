@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User do
-  # it { should have_many :portfolios }
+  it { should have_many :houses }
 
   it { should have_valid(:email).when("name@example.com") }
   it { should_not have_valid(:email).when(nil, "") }

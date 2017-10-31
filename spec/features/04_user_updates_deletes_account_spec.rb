@@ -13,7 +13,7 @@ feature "User Updates Account", %{
 } do
 
   scenario "authenticated user enters invalid information" do
-    user = User.create!(email: "duchess@example.gov",
+    user = User.create!(email: "archer@example.gov",
                         password: "sploosh1",
                         password_confirmation: "sploosh1",
                         first_name: "Sterling",
@@ -21,7 +21,7 @@ feature "User Updates Account", %{
 
     visit root_path
     click_link 'Log In'
-    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Email",    with: "archer@example.gov"
     fill_in "Password", with: "sploosh1"
     click_button "Log In"
     expect(page).to have_link("Update")
@@ -36,7 +36,7 @@ feature "User Updates Account", %{
   end
 
   scenario "authenticated user enters valid information" do
-    user = User.create!(email: "duchess@example.gov",
+    user = User.create!(email: "archer@example.gov",
                         password: "sploosh1",
                         password_confirmation: "sploosh1",
                         first_name: "Sterling",
@@ -44,7 +44,7 @@ feature "User Updates Account", %{
 
     visit root_path
     click_link 'Log In'
-    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Email",    with: "archer@example.gov"
     fill_in "Password", with: "sploosh1"
     click_button "Log In"
     expect(page).to have_link("Update")
@@ -76,7 +76,7 @@ feature "User Deletes Account", %{
 } do
 
   scenario "authenticated user successfully deletes account" do
-    user = User.create!(email: "duchess@example.gov",
+    user = User.create!(email: "archer@example.gov",
                         password: "sploosh1",
                         password_confirmation: "sploosh1",
                         first_name: "Sterling",
@@ -84,7 +84,7 @@ feature "User Deletes Account", %{
 
     visit root_path
     click_link 'Log In'
-    fill_in "Email",    with: "duchess@example.gov"
+    fill_in "Email",    with: "archer@example.gov"
     fill_in "Password", with: "sploosh1"
     click_button "Log In"
     expect(page).to have_link("Delete")
