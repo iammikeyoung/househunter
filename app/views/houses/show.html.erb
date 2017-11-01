@@ -1,0 +1,8 @@
+<h1>House Show Page</h1>
+<h3><%= @house.name %></h3>
+<h3><%= @house.full_address %></h3>
+<br>
+<p>Asking Amount: $<%= @house.asking_amount %></p>
+<p>Total Sqft: <%= @house.total_sqft %></p>
+
+<p><%= link_to "Back", user_path(current_user) %></p>

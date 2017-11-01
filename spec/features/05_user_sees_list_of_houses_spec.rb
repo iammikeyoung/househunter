@@ -2,6 +2,8 @@ require 'rails_helper'
 
 feature "authorized user sees their list of houses" do
 
+
+
   scenario "user sees list of houses and link for adding new house to list" do
     user = User.create!(email: "archer@example.gov",
                         password: "sploosh1",
@@ -14,9 +16,7 @@ feature "authorized user sees their list of houses" do
                               street: "101 Arch Street",
                               city: "Boston",
                               state: "MA",
-                              zip_code: "02110"
-                              asking_amount: 250_000,
-                              total_sqft: 1600)
+                              zip_code: "02110")
 
     house_two = House.create!(user: user,
                               name: "Above Italian Place",
@@ -46,14 +46,16 @@ feature "authorized user sees their list of houses" do
                         first_name: "Sterling",
                         last_name: "Archer")
 
-    house_one = House.create!(user: user,
+    house_three = House.create!(user: user,
                               name: "Near Work",
                               street: "101 Arch Street",
                               city: "Boston",
                               state: "MA",
-                              zip_code: "02110")
+                              zip_code: "02110",
+                              asking_amount: 250_000,
+                              total_sqft: 1600)
 
-    house_two = House.create!(user: user,
+    house_four = House.create!(user: user,
                               name: "Above Italian Place",
                               street: "307 Hanover Street",
                               city: "Boston",
@@ -67,9 +69,12 @@ feature "authorized user sees their list of houses" do
     click_button "Log In"
     click_link 'Near Work'
 
-    expect(page).to have_content house_one.name
-    expect(page).to have_content house_one.asking_amount
-    expect(page).to have_content house_one.total_sqft
-    expect(page).to have_link("Back")
+    expect(page).to have_content("Near Work")
+    expect(page).to have_content("Asking Amount: $250000")
+    expect(page).to have_content("Total Sqft: 1600")
+
+    click_link "Back"
+    expect(page).to have_content("User's Homepage")
+    expect(page).to_not have_content("House Show Page")
   end
 end

@@ -23,3 +23,14 @@
 <h1>User's Homepage:</h1>
 <h3>Welcome <%= @user.first_name %>!<br></h3>
 <p>Houses in portfolio go here.</p>
+
+<% if !@houses.empty? %>
+  <ul>
+    <% @houses.each do |house| %>
+      <li><%= link_to "#{house.name}", house_path(house) %></li>
+      <li><%= link_to "#{house.full_address}", house_path(house) %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<p><%= link_to "Add New House", new_user_house_path(current_user) %></p>
