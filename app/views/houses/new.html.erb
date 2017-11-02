@@ -1,0 +1,46 @@
+<h1>New House Form</h1>
+
+<%= form_for [current_user, @house] do |f| %>
+
+  <% if @house.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@house.errors.count, "error") %> prohibited
+        this question from being saved:
+      </h2>
+      <ul>
+        <% @house.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :name, "Nickname" %>
+  <%= f.text_field :name %>
+
+  <%= f.label :street %>
+  <%= f.text_field :street %>
+
+  <%= f.label :city %>
+  <%= f.text_field :city %>
+
+  <%= f.label :state %>
+  <%= f.text_field :state %>
+
+  <%= f.label :zip_code, "Zip Code" %>
+  <%= f.text_field :zip_code %>
+
+  <%= f.label :asking_amount %>
+  <%= f.text_field :asking_amount %>
+
+  <%= f.label :total_sqft %>
+  <%= f.text_field :total_sqft %>
+
+  <%= f.label :photo %>
+  <%= f.file_field :photo, accept: 'image/jpeg,image/gif,image/png' %>
+
+  <%= f.submit 'Save' %>
+<% end %>
+
+<p><%= link_to "Cancel", users_path(current_user) %></p>
