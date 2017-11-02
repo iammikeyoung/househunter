@@ -61,6 +61,7 @@ feature "authorized user edits and deletes houses in their list" do
     click_link 'Above Italian Place'
     click_link 'Delete'
 
+    expect(page).to have_content("House deleted")
     expect(page).to have_link("Near Work")
     expect(page).to_not have_link("Above Italian Place")
   end

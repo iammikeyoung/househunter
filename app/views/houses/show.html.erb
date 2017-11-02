@@ -7,3 +7,5 @@
 
 <p><%= link_to "Back", user_path(current_user) %></p>
 <p><%= link_to "Edit", edit_user_house_path(current_user) %></p>
+<p><%= link_to "Delete", user_house_path(current_user),  method: :delete,
+                                  data: { confirm: "Are you sure?" } %></p>

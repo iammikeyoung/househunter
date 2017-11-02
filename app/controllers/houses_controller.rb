@@ -32,6 +32,12 @@ class HousesController < ApplicationController
     end
   end
 
+  def destroy
+    House.find(params[:id]).destroy
+    flash[:notice] = "House deleted"
+    redirect_to current_user
+  end
+
   private
 
     def house_params
