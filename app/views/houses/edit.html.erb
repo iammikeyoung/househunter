@@ -1,5 +1,5 @@
-<% provide(:title, 'New House') %>
+<% provide(:title, 'Edit House') %>
 
-<h1>New House Form</h1>
+<h1>Edit <%= @house.name %></h1>
 <%= render 'form' %>
 <p><%= link_to "Cancel", users_path(current_user) %></p>

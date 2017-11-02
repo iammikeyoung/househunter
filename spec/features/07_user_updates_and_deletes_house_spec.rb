@@ -22,10 +22,11 @@ feature "authorized user edits and deletes houses in their list" do
     fill_in "Password", with: "sploosh1"
     click_button "Log In"
     click_link 'Above Italian Place'
+    click_link 'Edit'
 
-    expect(page).to have_content("Edit House Form")
-    fill_in "Name", with: "In North End"
-    click_button "Update"
+    expect(page).to have_content("Edit Above Italian Place")
+    fill_in "Nickname", with: "In North End"
+    click_button "Save"
 
     expect(page).to have_content("House successfully updated")
     expect(page).to have_link("In North End")

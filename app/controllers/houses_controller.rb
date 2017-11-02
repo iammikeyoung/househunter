@@ -18,6 +18,20 @@ class HousesController < ApplicationController
     end
   end
 
+  def edit
+    @house = House.find(params[:id])
+  end
+
+  def update
+    @house = House.find_by(id: params[:id])
+    if @house.update_attributes(house_params)
+      flash[:notice] = "House successfully updated"
+      redirect_to current_user
+    else
+      render 'edit'
+    end
+  end
+
   private
 
     def house_params
