@@ -2,6 +2,7 @@ class HousesController < ApplicationController
 
   def show
     @house = House.find(params[:id])
+    @notes = @house.notes
   end
 
   def new

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   before_save { self.email = email.downcase }
 
   has_many :houses
+  has_many :notes
 
   has_secure_password
 

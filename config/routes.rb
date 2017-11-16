@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     resources :houses, except: [:index]
   end
 
-  resources :houses, only: [:show]
+  resources :houses, only: [:show] do
+    resources :notes
+  end
+  resources :notes, only: [:show]
 
 end
