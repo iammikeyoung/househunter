@@ -1,1 +1,16 @@
+<h1>Note Show Page</h1>
+<%= flash[:notice] %>
+
 <h1>Notes For <%= @note.room %></h1>
+<h3>
+  <ul>
+    <li>Rating: <%= @note.rating %></li>
+    <li>Pros: <%= @note.pros %></li>
+    <li>Cons: <%= @note.cons %></li>
+  </ul>
+</h3>
+
+<p><%= link_to "Back", user_house_path(@house) %></p>
+<p><%= link_to "Edit", edit_note_path(@note) %></p>
+<p><%= link_to "Delete", note_path(@note),  method: :delete,
+                                  data: { confirm: "Are you sure?" } %></p>

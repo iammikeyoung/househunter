@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   resources :houses, only: [:show] do
     resources :notes
   end
-  resources :notes, only: [:show]
+  resources :notes, except: [:new, :create]
 
 end

@@ -1,0 +1,5 @@
+<% provide(:title, 'Edit Note') %>
+
+<h1>Edit <%= @note.room %></h1>
+<%= render 'form' %>
+<p><%= link_to "Cancel", note_path(@note) %></p>

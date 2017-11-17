@@ -2,6 +2,7 @@ class NotesController < ApplicationController
 
   def show
     @note = Note.find(params[:id])
+    @house = @note.house
   end
 
   def new
@@ -19,6 +20,28 @@ class NotesController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+    @note = Note.find(params[:id])
+  end
+
+  def update
+    @note = Note.find(params[:id])
+    if @note.update(note_params)
+      flash[:notice] = "Note successfully updated"
+      redirect_to @note
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @note = Note.find(params[:id])
+    @house = @note.house
+    @note.destroy
+    flash[:notice] = "Note successfully deleted"
+    redirect_to @house
   end
 
   private
