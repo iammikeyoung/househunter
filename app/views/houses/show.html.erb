@@ -1,4 +1,5 @@
 <h1>House Show Page</h1>
+<%= flash[:notice] %>
 <h3><%= @house.name %></h3>
 <h3><%= @house.full_address %></h3>
 <br>
@@ -12,7 +13,7 @@
     <% end %>
   </ul>
 <% end %>
-<p><%= link_to "Add Room", '#' %></p>
+<p><%= link_to "Add Room", new_house_note_path(@house) %></p>
 <p><%= link_to "Back", user_path(current_user) %></p>
 <p><%= link_to "Edit", edit_user_house_path(current_user) %></p>
 <p><%= link_to "Delete", user_house_path(current_user),  method: :delete,
