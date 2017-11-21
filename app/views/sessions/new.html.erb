@@ -1,18 +1,17 @@
 <% provide(:title, "Log In") %>
 
 <%= flash[:notice] %>
-<h1>Log In</h1>
 
-<%= form_for(:session, url: login_path) do |f| %>
+<%= form_for(:session, url: login_path, html: { class: "log-in-form" }) do |f| %>
+
+  <h4 class="text-center">Log In</h4>
 
   <%= f.label :email %>
-  <%= f.email_field :email %>
+  <%= f.email_field :email, placeholder: "somebody@example.com" %>
 
   <%= f.label :password %>
-  <%= f.password_field :password %>
+  <%= f.password_field :password, placeholder: "Password" %>
 
-  <%= f.submit "Log In" %>
+  <%= f.submit "Log In", class: "button expanded", id: "log-in-form-button" %>
 
 <% end %>
-
-<%= link_to "Cancel", welcome_index_path %>
