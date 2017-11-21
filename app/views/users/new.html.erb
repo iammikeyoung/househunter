@@ -1,51 +1,5 @@
 <% provide(:title, 'Sign up') %>
+<% provide(:form_title, 'Sign up') %>
+<% provide(:button_text, 'Create my account') %>
 
-<h1>Sign Up</h1>
-
-<%= form_for(@user) do |f| %>
-
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@user.errors.count, "error") %> prohibited
-        this user from being saved:
-      </h2>
-      <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="row">
-    <%= f.label :first_name, "First Name" %>
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="row">
-    <%= f.label :last_name, "Last Name" %>
-    <%= f.text_field :last_name %>
-  </div>
-  </div>
-
-  <div class="row">
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-  </div>
-
-  <div class="row">
-    <%= f.label :password, "Password (8 characters minimum)" %>
-    <%= f.password_field :password %>
-  </div>
-
-  <div class="row">
-    <%= f.label :password_confirmation, "Confirmation" %>
-    <%= f.password_field :password_confirmation %>
-  </div>
-
-  <div class="row">
-    <%= f.submit "Create Account" %>
-  </div>
-
-<% end %>
-<%= link_to "Cancel", welcome_index_path %>
+<%= render 'form' %>

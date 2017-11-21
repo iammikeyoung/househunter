@@ -85,9 +85,9 @@
 }
 
 
-/********************
-  LOGIN FORM
-********************/
+/*****************************
+  LOGIN FORM & SIGN UP FORM
+******************************/
 
 .log-in-form {
   border: 1px solid #cacaca;
@@ -110,7 +110,7 @@
   margin-bottom: .5rem;
 }
 
-.sign-in-form input:focus {
+.log-in-form input:focus {
   opacity: .8;
 }
 
@@ -122,5 +122,74 @@
 #session_email,
 #session_password {
   border-radius: 1rem;
+}
 
+
+/********************
+  SIGN UP FORM
+********************/
+
+.sign-up-form {
+  border: 1px solid #cacaca;
+  margin: 5% 30%;
+  padding: 3% 5%;
+  border-radius: .5rem;
+  background-color: #E6E8EB
+}
+
+.sign-up-form h4 {
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sign-up-form label {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: .5rem;
+}
+
+.sign-up-form input:focus {
+  opacity: .8;
+}
+
+#sign-up-form-button {
+  margin-top: 2rem;
+  border-radius: .8rem;
+}
+
+.sign-up-form .button-group {
+  margin-top: 2rem;
+}
+
+#user_first_name,
+#user_last_name,
+#user_email,
+#user_password,
+#user_password_confirmation {
+  border-radius: 1rem;
+}
+
+.sign-up-form-member-login {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.sign-up-form-member-login a {
+  margin-left: 0.25rem;
+}
+
+.sign-up-form-terms {
+  text-align: center;
+  font-size: 12px;
+}
+
+.sign-up-form-terms a:first-child {
+  margin-right: 0.25rem;
+}
+
+.sign-up-form-terms a:last-child {
+  margin-left: 0.25rem;
 }

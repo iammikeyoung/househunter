@@ -1,4 +1,6 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, html: { class: "sign-up-form" }) do |f| %>
+
+  <h4 class="text-center"><%= yield(:form_title) %></h4>
 
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -14,33 +16,30 @@
     </div>
   <% end %>
 
-  <div class="row">
-    <%= f.label :first_name, "First Name" %>
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="row">
-    <%= f.label :last_name, "Last Name" %>
-    <%= f.text_field :last_name %>
-  </div>
-  </div>
+  <%= f.label :first_name, "First Name" %>
+  <%= f.text_field :first_name %>
 
-  <div class="row">
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-  </div>
+  <%= f.label :last_name, "Last Name" %>
+  <%= f.text_field :last_name %>
 
-  <div class="row">
-    <%= f.label :password, "Password (8 characters minimum)" %>
-    <%= f.password_field :password %>
-  </div>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
 
-  <div class="row">
-    <%= f.label :password_confirmation, "Confirmation" %>
-    <%= f.password_field :password_confirmation %>
-  </div>
+  <%= f.label :password, "Password (8 characters minimum)" %>
+  <%= f.password_field :password %>
 
-  <div class="row">
-    <%= f.submit "Update Account" %>
-  </div>
+  <%= f.label :password_confirmation, "Confirmation" %>
+  <%= f.password_field :password_confirmation %>
+
+  <% if logged_in? %>
+    <div class="expanded button-group">
+      <%= f.submit yield(:button_text), class: "success button", id: "user-form-edit-button" %>
+      <%= link_to "Cancel", user_path(current_user), class: "alert button", id: "user-form-cancel-button" %>
+    </div>
+  <% else %>
+    <%= f.submit yield(:button_text), class: "button expanded", id: "sign-up-form-button" %>
+    <p class="sign-up-form-member-login">Already a member? <%= link_to "Sign in", login_path %></p>
+    <p class="sign-up-form-terms"> <%= link_to "Terms & Conditions", '#' %>|<%= link_to "Privacy", '#' %></p>
+  <% end %>
 
 <% end %>

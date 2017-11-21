@@ -1,6 +1,7 @@
-<% provide(:title, 'Edit user') %>
+<% provide(:title, 'Edit account') %>
+<% provide(:form_title, 'Update Account') %>
+<% provide(:button_text, 'Save Changes') %>
 
-<h1>Update your profile</h1>
 <%= render 'form' %>
 
 <%= link_to "Cancel", user_path(current_user) %>
