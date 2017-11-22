@@ -1,86 +1,112 @@
 <% provide(:title, "Homepage") %>
 
-<!-- DESKTOP NAVIGATION -->
-<nav class="top-bar nav-desktop">
-  <div class="top-bar-left">
-    <h3 class="site-logo">HouseHunter</h3>
-  </div>
-  <div class="top-bar-right">
-    <ul class="menu menu-desktop">
-      <li><a href="#">Home</a></li>
-      <li><%= link_to "Sign Up", new_user_path %></li>
-      <li><%= link_to "Log In", login_path %></li>
-    </ul>
-  </div>
-</nav>
+<!-- MOBILE NAVIVATION -->
 
-<!-- FLASH MESSAGE -->
-<section class="success">
-  <%= flash[:notice] %>
-</section>
+<div class="off-canvas position-left" id="mobile-menu" data-off-canvas>
+  <!-- Your menu or Off-canvas content goes here -->
+  <ul>
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to "Sign Up", new_user_path %></li>
+    <li><%= link_to "Log In", login_path %></li>
+  </ul>
+</div>
 
-<!-- HERO SECTION -->
-<section class="hero">
-    <h1 class="text-center">Welcome to the HouseHunter App!</h1>
-    <h5 class="text-center">Making all those little fluffies that live in the clouds. I'll go over the colors one more time that we use: Titanium white, Thalo green, Prussian blue, Van Dyke brown, Alizarin crimson, Sap green, Cad yellow, and Permanent red. Just relax and let it flow. That easy.</h5>
-    <div class="wrap row text-center">
-      <%= link_to "Learn More", '#', class: "button large gr-button", id: "learn-more-button" %>
-      <%= link_to "Sign up now!", new_user_path, class: "button large", id: "sign-up-button" %>
-    </div>
-</section>
+<div class="off-canvas-content" data-off-canvas-content>
+  <!-- Your page content lives here -->
 
+  <!-- MOBILE NAVIGATION -->
 
-<!-- MAIN CONTENT -->
-<section class="main">
-
-  <div class="row wrap text-center">
-      <h3>The Ultimate Value of Your Value Proposition</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquet pretium gravida. Duis bibendum ligula et porta rutrum. Orci varius cras amet.</p>
-  </div>
-
-  <div class="row wrap text-center">
-    <div class="column small-12 medium-4">
-      <img src="http://via.placeholder.com/150x150" alt="">
-      <h5>Benefit One</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
-    </div>
-    <div class="column small-12 medium-4 text-center">
-      <img src="http://via.placeholder.com/150x150" alt="">
-      <h5>Benefit Two</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
-    </div>
-    <div class="column small-12 medium-4 text-center">
-      <img src="http://via.placeholder.com/150x150" alt="">
-      <h5>Benefit Three</h5>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
+  <div class="title-bar show-for-small-only">
+    <div class="title-bar-left">
+      <button class="menu-icon" type="button" data-open="mobile-menu"></button>
+      <span class="title-bar-title">MENU</span>
     </div>
   </div>
 
-</section>
+  <!-- DESKTOP NAVIGATION -->
+
+  <nav class="top-bar nav-desktop">
+    <div class="top-bar-left">
+      <h3 class="site-logo">HouseHunter</h3>
+    </div>
+    <div class="top-bar-right">
+      <ul class="menu menu-desktop">
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Sign Up", new_user_path %></li>
+        <li><%= link_to "Log In", login_path %></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- FLASH MESSAGE -->
+  <section class="success">
+    <%= flash[:notice] %>
+  </section>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+      <h1 class="text-center">Welcome to the HouseHunter App!</h1>
+      <h5 class="text-center">Making all those little fluffies that live in the clouds. I'll go over the colors one more time that we use: Titanium white, Thalo green, Prussian blue, Van Dyke brown, Alizarin crimson, Sap green, Cad yellow, and Permanent red. Just relax and let it flow. That easy.</h5>
+      <div class="wrap row text-center">
+        <%= link_to "Learn More", '#', class: "button large gr-button", id: "learn-more-button" %>
+        <%= link_to "Sign up now!", new_user_path, class: "button large", id: "sign-up-button" %>
+      </div>
+  </section>
 
 
-<!-- FOOTER SECTION -->
-<footer>
-  <div class="row small-up-1 medium-up-3">
-    <div class="column">
-      <h4>Contact Info</h4>
-      <hr>
-      <a href="#"><span>Phone</span> 234 567 8900</a>
-      <a href="#"><span>Email</span> info@company.com</a>
-      <a href="#"><span>Address</span> 123 Street Name</a>
+  <!-- MAIN CONTENT -->
+  <section class="main">
+
+    <div class="row wrap text-center">
+        <h3>The Ultimate Value of Your Value Proposition</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquet pretium gravida. Duis bibendum ligula et porta rutrum. Orci varius cras amet.</p>
     </div>
-    <div class="column">
-      <h4>Site Map</h4>
-      <hr>
-      <a href="#">About us</a>
-      <a href="#">Contact Us</a>
+
+    <div class="row wrap text-center">
+      <div class="column small-12 medium-4">
+        <img src="http://via.placeholder.com/150x150" alt="">
+        <h5>Benefit One</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
+      </div>
+      <div class="column small-12 medium-4 text-center">
+        <img src="http://via.placeholder.com/150x150" alt="">
+        <h5>Benefit Two</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
+      </div>
+      <div class="column small-12 medium-4 text-center">
+        <img src="http://via.placeholder.com/150x150" alt="">
+        <h5>Benefit Three</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
+      </div>
     </div>
-    <div class="column">
-      <h4>Social Media</h4>
-      <hr>
-      <a href="#">Facebook</a>
-      <a href="#">Twitter</a>
-      <a href="#">Instagram</a>
+
+  </section>
+
+
+  <!-- FOOTER SECTION -->
+  <footer>
+    <div class="row small-up-1 medium-up-3">
+      <div class="column">
+        <h4>Contact Info</h4>
+        <hr>
+        <a href="#"><span>Phone</span> 234 567 8900</a>
+        <a href="#"><span>Email</span> info@company.com</a>
+        <a href="#"><span>Address</span> 123 Street Name</a>
+      </div>
+      <div class="column">
+        <h4>Site Map</h4>
+        <hr>
+        <a href="#">About us</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="column">
+        <h4>Social Media</h4>
+        <hr>
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
+
+</div>

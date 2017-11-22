@@ -46,6 +46,40 @@
   }
 }
 
+
+/********************
+  NAV - MOBILE
+********************/
+
+.title-bar {
+  background-color: #222;
+  height: 60px;
+}
+
+#mobile-menu {
+  background-color: #222;
+  padding: 10px;
+}
+
+#mobile-menu li {
+  list-style: none;
+}
+
+#mobile-menu a {
+  outline: none;
+  color: rgba(255, 255, 255, .6);
+  font-weight: bold;
+  line-height: 2;
+}
+
+#mobile-menu a:hover {
+  color: rgba(255, 255, 255, .8);
+}
+
+.js-off-canvas-overlay {
+  background: rgba(0, 0, 0, .6);
+}
+
 /********************
   NAV - DESKTOP
 ********************/
