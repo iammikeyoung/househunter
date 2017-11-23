@@ -14,10 +14,20 @@
     <h3 class="site-logo">HouseHunter</h3>
   </div>
   <div class="top-bar-right">
-    <ul class="menu menu-desktop">
-      <li><%= link_to "Home", root_path %></li>
-      <li><%= link_to "Sign Up", new_user_path %></li>
-      <li><%= link_to "Log In", login_path %></li>
-    </ul>
+    <% if logged_in? %>
+      <ul class="menu menu-desktop">
+        <li><%= link_to "Home", user_path(current_user) %></li>
+        <li><%= link_to "Update", edit_user_path(current_user) %></li>
+        <li><%= link_to "Delete", user_path(current_user),  method: :delete,
+                                                            data: { confirm: "You sure?" } %></li>
+        <li><%= link_to "Log Out", logout_path, method: :delete %></li>
+      </ul>
+    <% else %>
+      <ul class="menu menu-desktop">
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Sign Up", new_user_path %></li>
+        <li><%= link_to "Log In", login_path %></li>
+      </ul>
+    <% end %>
   </div>
 </nav>

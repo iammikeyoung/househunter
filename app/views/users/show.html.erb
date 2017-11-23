@@ -1,25 +1,6 @@
 <%= flash[:notice] %>
 <% provide(:title, "Home") %>
 
-<!-- DESKTOP NAVIGATION -->
-
-<nav class="top-bar">
-
-  <div class="top-bar-left">
-    <h3>HouseHunter</h3>
-  </div>
-  <div class="top-bar-right">
-    <ul class="menu">
-      <li><%= link_to "Home", user_path(current_user) %></li>
-      <li><%= link_to "Update", edit_user_path(current_user) %></li>
-      <li><%= link_to "Delete", user_path(current_user),  method: :delete,
-                                                          data: { confirm: "You sure?" } %></li>
-      <li><%= link_to "Log Out", logout_path, method: :delete %></li>
-    </ul>
-  </div>
-
-</nav>
-
 <h1>User's Homepage:</h1>
 <h3>Welcome <%= @user.first_name %>!<br></h3>
 <p>Houses in portfolio go here.</p>
