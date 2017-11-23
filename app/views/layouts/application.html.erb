@@ -13,7 +13,22 @@
 
   <body>
 
-    <%= yield %>
+    <!-- OFF CANVAS MENU -->
+    <div class="off-canvas position-left" id="mobile-menu" data-off-canvas>
+      <!-- Your menu or Off-canvas content goes here -->
+      <%= render 'layouts/mobile_menu' %>
+    </div>
 
+    <div class="off-canvas-content" data-off-canvas-content>
+      <!-- Your page content lives here -->
+
+      <!-- MOBILE & DESKTOP NAVIGATION -->
+      <%= render 'layouts/navbar' %>
+
+      <%= yield %>
+
+      <!-- FOOTER -->
+      <%= render 'layouts/footer' %>
+    </div>
   </body>
 </html>

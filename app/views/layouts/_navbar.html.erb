@@ -1,0 +1,23 @@
+<!-- MOBILE NAVIGATION -->
+
+<div class="title-bar show-for-small-only">
+  <div class="title-bar-left">
+    <button class="menu-icon" type="button" data-open="mobile-menu"></button>
+    <span class="title-bar-title">MENU</span>
+  </div>
+</div>
+
+<!-- DESKTOP NAVIGATION -->
+
+<nav class="top-bar nav-desktop">
+  <div class="top-bar-left">
+    <h3 class="site-logo">HouseHunter</h3>
+  </div>
+  <div class="top-bar-right">
+    <ul class="menu menu-desktop">
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Sign Up", new_user_path %></li>
+      <li><%= link_to "Log In", login_path %></li>
+    </ul>
+  </div>
+</nav>
