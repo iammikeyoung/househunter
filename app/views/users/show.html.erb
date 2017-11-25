@@ -1,17 +1,21 @@
-<%= flash[:notice] %>
 <% provide(:title, "Home") %>
+<%= flash[:notice] %>
 
-<h1>User's Homepage:</h1>
 <h3>Welcome <%= @user.first_name %>!<br></h3>
-<p>Houses in portfolio go here.</p>
 
-<% if !@houses.empty? %>
-  <ul>
+<!-- LOOPS THROUGH EACH HOUSE IN PORTFOLIO -->
+<div class="row small-up-1 medium-up-4">
+  <% if !@houses.empty? %>
     <% @houses.each do |house| %>
-      <li><%= link_to "#{house.name}", house_path(house) %></li>
-      <li><%= link_to "#{house.full_address}", house_path(house) %></li>
+      <div class="column column-block">
+        <%= link_to image_tag("http://via.placeholder.com/200x200"), house_path(house) %>
+        <p><%= link_to "#{house.name}", house_path(house) %></p>
+      </div>
     <% end %>
-  </ul>
-<% end %>
-
-<p><%= link_to "Add New House", new_user_house_path(current_user) %></p>
+  <% end %>
+<!-- ADD A NEW HOUSE IMAGE -->
+  <div class="column column-block">
+    <%= link_to image_tag("http://via.placeholder.com/200x200"), new_user_house_path(current_user) %>
+    <p><%= link_to "Add A New House", new_user_house_path(current_user) %></p>
+  </div>
+</div>
