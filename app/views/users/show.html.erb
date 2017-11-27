@@ -1,7 +1,9 @@
 <% provide(:title, "Home") %>
 <%= flash[:notice] %>
 
-<h3>Welcome <%= @user.first_name %>!<br></h3>
+<div class="user-homepage">
+
+<h3>Welcome <%= @user.first_name %>!</h3>
 
 <!-- LOOPS THROUGH EACH HOUSE IN PORTFOLIO -->
 <div class="row small-up-1 medium-up-4">
@@ -18,4 +20,5 @@
     <i class="fa fa-plus-square" aria-hidden="true" style="font-size: 200px; color: teal"></i>
     <p><%= link_to "Add A New House", new_user_house_path(current_user) %></p>
   </div>
+</div>
 </div>
