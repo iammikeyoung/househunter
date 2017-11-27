@@ -159,17 +159,66 @@
 ********************/
 
 .main {
-  padding-top: 3em;
+  margin-top: 3em;
+  margin-bottom: 3em;
 }
 
-.main p {
-  padding-top: 1rem;
+#main-value-prop {
+  margin-bottom: 2em;
 }
 
-.main img {
+#main-value-prop p {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0 20%;
+}
+
+#main-benefits img {
   border-radius: 50%;
+  margin-bottom: 1.5rem;
 }
 
+#main-benefits h5 {
+  margin-bottom: 1rem
+}
+
+#main-benefits p {
+  padding: 0 13%;
+}
+
+/********
+  FOOTER
+*********/
+
+footer {
+  background-color: #222;
+  padding: 40px 0;
+}
+
+footer h4 {
+  color: rgba(255, 255, 255, .8);
+  font-size: 1.3em;
+}
+
+footer hr {
+  border-color: rgba(255, 255, 255, .1);
+  margin: 10px 0;
+}
+
+footer a {
+  display: block;
+  color: rgba(255, 255, 255, .6);
+  font-size: .8em;
+}
+
+footer a:hover {
+  color: rgba(255, 255, 255, .8);
+}
+
+footer a span {
+  font-weight: bold;
+  color: rgba(255, 255, 255, .3);
+}
 
 /*****************************
   LOGIN FORM & SIGN UP FORM
