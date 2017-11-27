@@ -1,4 +1,6 @@
-<%= form_for [current_user, @house] do |f| %>
+<%= form_for [current_user, @house], html: { class: "house-form" } do |f| %>
+
+  <h4 class="text-center"><%= yield(:form_title) %></h4>
 
   <% if @house.errors.any? %>
     <div id="error_explanation">
@@ -38,5 +40,8 @@
   <%= f.label :photo %>
   <%= f.file_field :photo, accept: 'image/jpeg,image/gif,image/png' %>
 
-  <%= f.submit 'Save' %>
+  <div class="expanded button-group">
+    <%= f.submit yield(:button_text), class: "success button", id: "user-form-button" %>
+    <%= link_to "Cancel", user_path(current_user), class: "alert button", id: "user-form-cancel-button" %>
+  </div>
 <% end %>

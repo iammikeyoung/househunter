@@ -35,7 +35,6 @@
   background: #34495E;
 }
 
-
 /********************
   MEDIA QUERY
 ********************/
@@ -279,4 +278,48 @@
 
 .sign-up-form-terms a:last-child {
   margin-left: 0.25rem;
+}
+
+
+/************
+  HOUSE FORM
+*************/
+
+.house-form {
+  border: 1px solid #cacaca;
+  margin: 5% 30%;
+  padding: 3% 5%;
+  border-radius: .5rem;
+  background-color: #E6E8EB
+}
+
+.house-form h4 {
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.house-form label {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: .5rem;
+}
+
+.house-form input:focus {
+  opacity: .8;
+}
+
+.house-form .button-group {
+  margin-top: 2rem;
+}
+
+#house_name,
+#house_street,
+#house_city,
+#house_state,
+#house_zip_code,
+#house_asking_amount,
+#house_total_sqft {
+  border-radius: 1rem;
 }
