@@ -42,6 +42,6 @@
 
   <div class="expanded button-group">
     <%= f.submit yield(:button_text), class: "success button", id: "user-form-button" %>
-    <%= link_to "Cancel", user_path(current_user), class: "alert button", id: "user-form-cancel-button" %>
+    <%= link_to "Cancel", house_path(@house), class: "alert button", id: "user-form-cancel-button" %>
   </div>
 <% end %>

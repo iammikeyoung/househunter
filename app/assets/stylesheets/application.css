@@ -340,6 +340,38 @@ footer a span {
 .user-homepage h3 {
   margin-bottom: 2rem;
 }
+
+/*****************
+  HOUSE SHOW PAGE
+******************/
+
+.house-details-title h1 {
+  margin: 3rem 2.5%;
+  display: inline-block;
+}
+
+#house-details-buttons {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+#house-details-buttons .button {
+  border-radius: 5px;
+}
+
+.house-general-info h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+#house-name {
+  margin-top: 1rem;
+}
+
+.house-general-info span {
+  font-weight: bold;
+}
+
 /************
   HOUSE FORM
 *************/

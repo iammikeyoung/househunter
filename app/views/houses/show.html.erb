@@ -1,14 +1,27 @@
-<h2>House Details</h2>
-<%= flash[:notice] %>
-<div class="house-general-info row">
-  <div class="column left-info">
-    <h4><%= @house.name %></h4>
-    <h5><%= @house.full_address %></h5>
+<div class="house-details-title">
+  <h1>House Details</h1>
+  <div id="house-details-buttons">
+    <div class="button-group">
+      <%= link_to "Back", user_path(current_user), class: "button" %>
+      <%= link_to "Edit", edit_user_house_path(current_user), class: "button success" %>
+      <%= link_to "Delete", user_house_path(current_user),  class: "button alert",
+                                                            method: :delete, data: { confirm: "Are you sure?" } %>
+    </div>
   </div>
-  <div class="column right-info">
-    <h4>General Info</h4>
-    <p>Asking Amount: $<%= @house.asking_amount %></p>
-    <p>Total Sqft: <%= @house.total_sqft %></p>
+</div>
+
+<%= flash[:notice] %>
+
+<div class="house-general-info row">
+  <div class="small-12 medium-6 columns">
+    <%= image_tag("http://via.placeholder.com/400x400") %>
+    <h3 id="house-name"><%= @house.name %></h3>
+    <p id="house-address"><%= @house.full_address %></p>
+  </div>
+  <div class="small-12 medium-6 columns right-info">
+    <h2>General Info</h4>
+    <p><span>Asking Amount:</span> $<%= @house.asking_amount %></p>
+    <p><span>Total Sqft:</span> <%= @house.total_sqft %></p>
   </div>
 </div>
 <% if !@notes.empty? %>
@@ -18,8 +31,5 @@
     <% end %>
   </ul>
 <% end %>
+
 <p><%= link_to "Add Room", new_house_note_path(@house) %></p>
-<p><%= link_to "Back", user_path(current_user) %></p>
-<p><%= link_to "Edit", edit_user_house_path(current_user) %></p>
-<p><%= link_to "Delete", user_house_path(current_user),  method: :delete,
-                                  data: { confirm: "Are you sure?" } %></p>
