@@ -1,11 +1,16 @@
-<h1>House Show Page</h1>
+<h2>House Details</h2>
 <%= flash[:notice] %>
-<h3><%= @house.name %></h3>
-<h3><%= @house.full_address %></h3>
-<br>
-<p>Asking Amount: $<%= @house.asking_amount %></p>
-<p>Total Sqft: <%= @house.total_sqft %></p>
-<br>
+<div class="house-general-info row">
+  <div class="column left-info">
+    <h4><%= @house.name %></h4>
+    <h5><%= @house.full_address %></h5>
+  </div>
+  <div class="column right-info">
+    <h4>General Info</h4>
+    <p>Asking Amount: $<%= @house.asking_amount %></p>
+    <p>Total Sqft: <%= @house.total_sqft %></p>
+  </div>
+</div>
 <% if !@notes.empty? %>
   <ul>
     <% @notes.each do |note| %>
