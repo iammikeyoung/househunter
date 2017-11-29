@@ -34,23 +34,31 @@
 <div class="house-positives">
   <hr>
   <h2>Likes</h2>
+  <!-- ADD IN CONDITIONAL STATEMENT, "NOT APPLICABLE" IF "POSITIVES" ARE BLANK -->
+  <!-- ELSE, CYCLE THROUGH 3 OF THE POSITIVES -->
+  <p>Not applicable.</p>
 </div>
 
 <div class="house-negatives">
   <hr>
   <h2>Dislikes</h2>
+  <!-- ADD IN CONDITIONAL STATEMENT, "NOT APPLICABLE" IF "NEGATIVES" ARE BLANK -->
+  <!-- ELSE, CYCLE THROUGH 3 OF THE NEGATIVES -->
+  <p>Not applicable.</p>
 </div>
 
 <div class="house-notes">
   <hr>
   <h2>All Notes</h2>
-  <p><%= link_to "Add Room", new_house_note_path(@house) %></p>
+  <p><%= link_to "Add Room", new_house_note_path(@house), class: "tiny button" %></p>
   <% if !@notes.empty? %>
     <ul>
       <% @notes.each do |note| %>
         <li><%= link_to "#{note.room}", note_path(note) %></li>
       <% end %>
     </ul>
+  <% else %>
+    <p>No notes available for this house.</p>
   <% end %>
 </div>
 
