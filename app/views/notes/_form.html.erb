@@ -1,4 +1,6 @@
-<%= form_for [@house, @note] do |f| %>
+<%= form_for [@house, @note], html: { class: "note-form" } do |f| %>
+
+  <h4 class="text-center"><%= yield(:form_title) %></h4>
 
   <% if @note.errors.any? %>
     <div id="error_explanation">
@@ -14,7 +16,7 @@
     </div>
   <% end %>
 
-  <%= f.label :room %>
+  <%= f.label :room, "Room or House Feature" %>
   <%= f.text_field :room %>
 
   <%= f.label :rating %>
@@ -26,5 +28,9 @@
   <%= f.label :cons %>
   <%= f.text_area :cons, placeholder: "Things you do not like..." %>
 
-  <%= f.submit 'Save' %>
+  <div class="expanded button-group">
+    <%= f.submit yield(:button_text), class: "success button", id: "note-form-save-button" %>
+    <%= link_to "Cancel", house_path(@house), class: "alert button", id: "note-form-cancel-button" %>
+  </div>
+
 <% end %>
