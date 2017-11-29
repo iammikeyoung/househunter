@@ -1,7 +1,7 @@
-<div class="house-details-title">
+<div class="house-details-top">
   <h1>House Details</h1>
   <div id="house-details-buttons">
-    <div class="button-group">
+    <div class="small button-group">
       <%= link_to "Back", user_path(current_user), class: "button" %>
       <%= link_to "Edit", edit_user_house_path(current_user), class: "button success" %>
       <%= link_to "Delete", user_house_path(current_user),  class: "button alert",
@@ -12,24 +12,50 @@
 
 <%= flash[:notice] %>
 
-<div class="house-general-info row">
-  <div class="small-12 medium-6 columns">
-    <%= image_tag("http://via.placeholder.com/400x400") %>
-    <h3 id="house-name"><%= @house.name %></h3>
-    <p id="house-address"><%= @house.full_address %></p>
-  </div>
-  <div class="small-12 medium-6 columns right-info">
-    <h2>General Info</h4>
-    <p><span>Asking Amount:</span> $<%= @house.asking_amount %></p>
-    <p><span>Total Sqft:</span> <%= @house.total_sqft %></p>
+<div class="house-general-info">
+  <hr>
+  <h2>General Info</h2>
+  <div class="row">
+    <div class="small-12 medium-6 columns left-column">
+      <%= image_tag("http://via.placeholder.com/300x300") %>
+      <h4 id="house-name"><%= @house.name %></h4>
+      <p id="house-address"><%= @house.full_address %></p>
+    </div>
+    <div class="small-12 medium-6 columns right-column">
+      <p><span>Asking Price:</span> $<%= @house.asking_amount %></p>
+      <p><span>Total Sqft:</span> <%= @house.total_sqft %></p>
+      <p><span>Price per sqft:</span> $<%= @house.price_per_sqft %></p>
+      <p><span>Overall Impression:</span> </p>
+      <p><span>Short list?</span> </p>
+    </div>
   </div>
 </div>
-<% if !@notes.empty? %>
-  <ul>
-    <% @notes.each do |note| %>
-      <li><%= link_to "#{note.room}", note_path(note) %></li>
-    <% end %>
-  </ul>
-<% end %>
 
-<p><%= link_to "Add Room", new_house_note_path(@house) %></p>
+<div class="house-positives">
+  <hr>
+  <h2>Likes</h2>
+</div>
+
+<div class="house-negatives">
+  <hr>
+  <h2>Dislikes</h2>
+</div>
+
+<div class="house-notes">
+  <hr>
+  <h2>All Notes</h2>
+  <p><%= link_to "Add Room", new_house_note_path(@house) %></p>
+  <% if !@notes.empty? %>
+    <ul>
+      <% @notes.each do |note| %>
+        <li><%= link_to "#{note.room}", note_path(note) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<div class="house-additional-info">
+  <hr>
+  <h2>Additional Information</h2>
+  <p>PDF's, etc.</p>
+</div>

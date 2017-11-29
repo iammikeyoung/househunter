@@ -9,4 +9,8 @@ class House < ApplicationRecord
   def full_address
     [street, city, state, zip_code].join(' ')
   end
+
+  def price_per_sqft
+    asking_amount / total_sqft
+  end
 end
