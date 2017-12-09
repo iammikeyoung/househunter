@@ -8,11 +8,6 @@ feature "User must be signed in to assess user pages" do
                         password_confirmation: "sploosh1",
                         first_name: "Sterling",
                         last_name: "Archer")
-    wrong_user = User.create!(email: "joe_schmoe@email.com",
-                        password: "supersecret007",
-                        password_confirmation: "supersecret007",
-                        first_name: "Joe",
-                        last_name: "Schmoe")
 
     visit user_path(user)
     expect(page).to have_content("Please log in.")

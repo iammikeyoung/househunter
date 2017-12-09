@@ -1,4 +1,6 @@
 class HousesController < ApplicationController
+  before_action :logged_in_user,  only: [:show, :edit, :update, :destroy]
+  before_action :correct_user,    only: [:show, :edit, :update, :destroy]
 
   def show
     @house = House.find(params[:id])
@@ -48,4 +50,23 @@ class HousesController < ApplicationController
                                     :photo)
     end
 
+    # Before filters
+
+    # Confirms a logged-in user
+    def logged_in_user
+      unless logged_in?
+        flash[:notice] = "Please log in."
+        redirect_to login_url
+      end
+    end
+
+    # Confirms the correct user.
+    def correct_user
+      @house = House.find(params[:id])
+      @user = @house.user.id
+      unless current_user?(@user)
+        flash[:notice] = "Unauthorized access."
+        redirect_to(root_path)
+      end
+    end
 end
