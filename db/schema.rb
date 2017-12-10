@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102223809) do
+ActiveRecord::Schema.define(version: 20171210184822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20171102223809) do
     t.string "zip_code", null: false
     t.integer "asking_amount"
     t.integer "total_sqft"
-    t.string "photo"
+    t.string "house_profile_pic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_houses_on_user_id"
