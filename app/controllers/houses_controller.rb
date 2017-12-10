@@ -63,7 +63,7 @@ class HousesController < ApplicationController
     # Confirms the correct user.
     def correct_user
       @house = House.find(params[:id])
-      @user = @house.user.id
+      @user = @house.user
       unless current_user?(@user)
         flash[:notice] = "Unauthorized access."
         redirect_to(root_path)

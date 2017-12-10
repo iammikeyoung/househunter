@@ -1,4 +1,6 @@
 class NotesController < ApplicationController
+  before_action :logged_in_user
+  before_action :correct_user
 
   def show
     @note = Note.find(params[:id])
@@ -47,6 +49,26 @@ class NotesController < ApplicationController
   private
     def note_params
       params.require(:note).permit(:room, :rating, :pros, :cons)
+    end
+
+    # Before filters
+
+    # Confirms a logged-in user
+    def logged_in_user
+      unless logged_in?
+        flash[:notice] = "Please log in."
+        redirect_to login_url
+      end
+    end
+
+    # Confirms the correct user.
+    def correct_user
+      @note = Note.find(params[:id])
+      @user = @note.user
+      unless current_user?(@user)
+        flash[:notice] = "Unauthorized access."
+        redirect_to @current_user
+      end
     end
 
 end
