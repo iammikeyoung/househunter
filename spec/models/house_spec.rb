@@ -18,5 +18,5 @@ describe House do
   it { should have_valid(:name).when(nil, "", "House Near Mom") }
   it { should have_valid(:asking_amount).when(nil, "", 200_000) }
   it { should have_valid(:total_sqft).when(nil, "", 1600) }
-  it { should have_valid(:photo).when(nil, "", "photo_url") }
+  it { should have_valid(:house_profile_pic).when(nil, "", "photo_url") }
 end

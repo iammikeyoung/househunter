@@ -20,11 +20,11 @@ feature "Authorized User Adds Houses",
                           last_name: "Archer")
 
       visit root_path
-      click_link 'Log In'
+      within('nav') { click_link 'Log In' }
       fill_in "Email",    with: "archer@example.gov"
       fill_in "Password", with: "sploosh1"
       click_button "Log In"
-      click_link("Add New House")
+      click_link("Add A New House")
 
       expect(page).to have_content("New House Form")
       expect(page).to have_link("Cancel")
@@ -45,11 +45,11 @@ feature "Authorized User Adds Houses",
                           last_name: "Archer")
 
       visit root_path
-      click_link 'Log In'
+      within('nav') { click_link 'Log In' }
       fill_in "Email",    with: "archer@example.gov"
       fill_in "Password", with: "sploosh1"
       click_button "Log In"
-      click_link "Add New House"
+      click_link "Add A New House"
 
       expect(page).to have_content("New House Form")
       expect(page).to have_link("Cancel")
@@ -58,10 +58,12 @@ feature "Authorized User Adds Houses",
       fill_in "City", with: "City-Name"
       fill_in "State", with: "State-Name"
       fill_in "Zip Code", with: "01234"
+      attach_file :house_profile_pic, "#{Rails.root}/spec/support/images/house_photo.jpeg"
       click_button "Save"
 
       expect(page).to have_content("House successfully added")
       expect(page).to have_link("Around Corner From Mom")
+      expect(page).to have_css("img[src*='house_photo.jpeg']")
     end
 
   end
