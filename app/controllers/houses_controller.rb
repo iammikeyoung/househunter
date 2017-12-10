@@ -47,7 +47,7 @@ class HousesController < ApplicationController
       params.require(:house).permit(:name, :street, :city, :state, :zip_code,
                                     :asking_amount,
                                     :total_sqft,
-                                    :photo)
+                                    :house_profile_pic)
     end
 
     # Before filters
