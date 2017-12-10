@@ -11,6 +11,7 @@ gem 'jquery-rails'
 # Use ActiveModel has_secure_password
 gem 'bcrypt',           '~> 3.1.7'
 gem 'carrierwave',      '~> 1.0'
+gem 'mini_magick',      '~> 4.8'
 
 group :development, :test do
   gem 'pry-rails'
