@@ -29,6 +29,10 @@ group :development do
   gem 'spring-watcher-listen',  '~> 2.0.0'
 end
 
+group :development, :production do
+  gem 'fog'
+end
+
 group :production do
   gem 'puma',           '~> 3.7'
   gem 'rails_12factor'
