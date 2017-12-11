@@ -58,7 +58,7 @@ feature "Authorized User Adds Houses",
       fill_in "City", with: "City-Name"
       fill_in "State", with: "State-Name"
       fill_in "Zip Code", with: "01234"
-      attach_file :house_profile_pic, "#{Rails.root}/spec/support/images/house_photo.jpeg"
+      attach_file "house[house_profile_pic]", "#{Rails.root}/spec/support/images/house_photo.jpeg"
       click_button "Save"
 
       expect(page).to have_content("House successfully added")

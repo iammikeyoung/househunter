@@ -10,7 +10,7 @@
   <% if !@houses.empty? %>
     <% @houses.each do |house| %>
       <div class="column column-block">
-        <%= image_tag house.house_profile_pic.url if house.house_profile_pic? %>
+        <%= image_tag house.house_profile_pic.url(:small) if house.house_profile_pic? %>
         <p><%= link_to "#{house.name}", house_path(house) %></p>
       </div>
     <% end %>
