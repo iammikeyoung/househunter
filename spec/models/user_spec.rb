@@ -17,24 +17,24 @@ describe User do
   end
 
   it "is invalid without a first name" do
-    user1 = User.new(first_name: nil)
-    user2 = User.new(first_name: "")
+    user1 = FactoryBot.build(:user, first_name: nil)
+    user2 = FactoryBot.build(:user, first_name: "")
 
     expect(user1).to_not be_valid
     expect(user2).to_not be_valid
   end
 
   it "is invalid without a last name" do
-    user1 = User.new(last_name: nil)
-    user2 = User.new(last_name: "")
+    user1 = FactoryBot.build(:user, last_name: nil)
+    user2 = FactoryBot.build(:user, last_name: "")
 
     expect(user1).to_not be_valid
     expect(user2).to_not be_valid
   end
 
   it "is invalid without a email name" do
-    user1 = User.new(email: nil)
-    user2 = User.new(email: "")
+    user1 = FactoryBot.build(:user, email: nil)
+    user2 = FactoryBot.build(:user, email: "")
 
     expect(user1).to_not be_valid
     expect(user2).to_not be_valid
@@ -59,8 +59,8 @@ describe User do
   end
 
   it "is invalid without a password" do
-    user1 = User.new(password: nil)
-    user2 = User.new(password: "")
+    user1 = FactoryBot.build(:user, password: nil)
+    user2 = FactoryBot.build(:user, password: "")
 
     expect(user1).to_not be_valid
     expect(user2).to_not be_valid
