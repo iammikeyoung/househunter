@@ -22,6 +22,7 @@ group :development, :test do
   gem 'shoulda'
   gem 'rails-controller-testing'
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
