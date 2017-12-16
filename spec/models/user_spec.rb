@@ -10,7 +10,7 @@ describe User do
       first_name: "Sterling",
       last_name: "Archer",
       email: "archer@example.gov",
-      password: "sploosh1",
+      password: "password25",
     )
 
     expect(user).to be_valid
@@ -41,19 +41,8 @@ describe User do
   end
 
   it "is invalid with a duplicate email address in database" do
-    User.create(
-      first_name: "Sterling",
-      last_name: "Archer",
-      email: "archer@example.gov",
-      password: "sploosh1",
-    )
-
-    user = User.new(
-      first_name: "Sterling",
-      last_name: "Archer",
-      email: "archer@example.gov",
-      password: "sploosh1",
-    )
+    FactoryBot.create(:user, email: "archer@example.gov")
+    user = FactoryBot.build(:user, email: "archer@example.gov")
 
     expect(user).to_not be_valid
   end
@@ -69,12 +58,7 @@ describe User do
   it "should be invalid with a password that does not fit regex requirements"
 
   it "returns a contact's full name as a string" do
-    user = User.new(
-      first_name: "Sterling",
-      last_name: "Archer",
-      email: "archer@example.gov",
-      password: "sploosh1",
-    )
+    user = FactoryBot.build(:user, first_name: "Sterling", last_name: "Archer")
 
     expect(user.name).to eq("Sterling Archer")
   end
