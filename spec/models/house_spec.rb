@@ -68,7 +68,27 @@ describe House do
   end
 
   context "instance methods" do
-    xdescribe "address"
-    xdescribe "price_per_sqft"
+    let(:house) { FactoryBot.build(:house) }
+
+    describe "#address" do
+      it "returns a house's full address as a string" do
+        expect(house.address).to eq("101 Arch Street Boston MA 02110")
+      end
+    end
+
+    describe "price_per_sqft" do
+      before(:each) do
+        house.asking_amount = 200000
+        house.total_sqft = 2000
+      end
+
+      it "is an integer" do
+        expect(house.price_per_sqft).to be_an(Integer)
+      end
+
+      it "returns a house's price per sqft as an integer" do
+        expect(house.price_per_sqft).to eq(100)
+      end
+    end
   end
 end
