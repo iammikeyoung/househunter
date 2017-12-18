@@ -1,77 +1,99 @@
 require 'rails_helper'
 
 describe User do
-  it "has a valid factory" do
-    expect(FactoryBot.build(:user)).to be_valid
+  context "FactoryBot" do
+    it "has a valid factory" do
+      user = FactoryBot.build(:user)
+      expect(user).to be_valid
+    end
   end
 
-  it "is valid with a first name, last name, email and password" do
-    user = User.new(
-      first_name: "Sterling",
-      last_name: "Archer",
-      email: "archer@example.gov",
-      password: "password25",
-    )
+  context "validations" do
+    it "is valid with a first name, last name, email and password" do
+      user = User.new(
+        first_name: "Sterling",
+        last_name: "Archer",
+        email: "archer@example.gov",
+        password: "dutchess25",
+      )
 
-    expect(user).to be_valid
+      expect(user).to be_valid
+    end
+
+    it { is_expected.to validate_presence_of :first_name }
+    it { is_expected.to validate_length_of(:first_name).is_at_most(25) }
+
+    it { is_expected.to validate_presence_of :last_name }
+    it { is_expected.to validate_length_of(:last_name).is_at_most(25) }
+
+    it { is_expected.to validate_presence_of :email }
+    it { is_expected.to validate_uniqueness_of(:email) }
+    it { is_expected.to validate_length_of(:email).is_at_most(50) }
+    it { is_expected.to_not allow_value('user@example,com').for(:email) }
+    it { is_expected.to_not allow_value('user_at_foo.org').for(:email) }
+    it { is_expected.to_not allow_value('user.name@example.').for(:email) }
+    it { is_expected.to_not allow_value('foo@bar_baz.com').for(:email) }
+    it { is_expected.to_not allow_value('foo@bar+baz.com').for(:email) }
+
+    it { is_expected.to validate_presence_of :password }
+    it { is_expected.to validate_length_of(:password).is_at_least(8) }
+    it { is_expected.to_not allow_value('12345678').for(:password) } # best practice for this?
+    it { is_expected.to have_secure_password }
+
+    describe "#password" do
+      let(:user) { FactoryBot.build(:user, password: "1234567a") }
+
+      it "is valid if password is 8 characters" do
+        expect(user).to be_valid
+      end
+
+      it "must have at least 8 characters to be valid" do
+        user.password = "123456a"
+        expect(user).to_not be_valid
+      end
+
+      it "must have at least 1 letter to be valid" do
+        user.password = "12345678"
+        expect(user).to_not be_valid
+      end
+
+      it "must have at least 1 number to be valid" do
+        user.password = "abcdefgh"
+        expect(user).to_not be_valid
+      end
+
+      it "can only contain letters and numbers" do
+        user.password = "ab-cd1_2"
+        expect(user).to_not be_valid
+      end
+    end
   end
 
-  it "is invalid without a first name" do
-    user1 = FactoryBot.build(:user, first_name: nil)
-    user2 = FactoryBot.build(:user, first_name: "")
-
-    expect(user1).to_not be_valid
-    expect(user2).to_not be_valid
+  context "associations" do
+    it { is_expected.to have_many(:houses) }
   end
 
-  it "is invalid without a last name" do
-    user1 = FactoryBot.build(:user, last_name: nil)
-    user2 = FactoryBot.build(:user, last_name: "")
+  context "instance methods" do
+    let(:user) { FactoryBot.build(:user, first_name: "Sterling", last_name: "Archer") }
 
-    expect(user1).to_not be_valid
-    expect(user2).to_not be_valid
+    describe "#name" do
+      it "returns a user's full name as a string" do
+        expect(user.name).to eq("Sterling Archer")
+      end
+    end
+
+    describe "#authenticate" do
+      it "returns the user object if the correct password is given" do
+        expect(user.authenticate("pass2017")).to eq(user)
+      end
+
+      it "returns false if incorrect password is given" do
+        expect(user.authenticate("not_the_right_password")).to eq(false)
+      end
+
+      it "returns true with double-bang and correct password is given" do
+        expect(!!user.authenticate("pass2017")).to eq(true)
+      end
+    end
   end
-
-  it "is invalid without a email name" do
-    user1 = FactoryBot.build(:user, email: nil)
-    user2 = FactoryBot.build(:user, email: "")
-
-    expect(user1).to_not be_valid
-    expect(user2).to_not be_valid
-  end
-
-  it "is invalid with a duplicate email address in database" do
-    FactoryBot.create(:user, email: "archer@example.gov")
-    user = FactoryBot.build(:user, email: "archer@example.gov")
-
-    expect(user).to_not be_valid
-  end
-
-  it "is invalid without a password" do
-    user1 = FactoryBot.build(:user, password: nil)
-    user2 = FactoryBot.build(:user, password: "")
-
-    expect(user1).to_not be_valid
-    expect(user2).to_not be_valid
-  end
-
-  it "should be invalid with a password that does not fit regex requirements"
-
-  it "returns a contact's full name as a string" do
-    user = FactoryBot.build(:user, first_name: "Sterling", last_name: "Archer")
-
-    expect(user.name).to eq("Sterling Archer")
-  end
-
-  it "should have many houses"
-  it "should authenticate"
-
-  # it { should have_many :houses }
-  # it { should_not have_valid(:password).when("1234567") }
-  # it "authenticates a user" do
-  #   user = User.create!(email: "name@example.com", password: "password")
-  #   expect(user.authenticate("not_the_right_password")).to eq(false)
-  #   expect(user.authenticate("password")).to eq(user)
-  #   expect(!!user.authenticate("password")).to eq(true)
-  # end
 end
