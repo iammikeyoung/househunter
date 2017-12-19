@@ -25,7 +25,7 @@ describe House do
 
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_length_of(:name).is_at_most(25) }
-    it "{ is_expected.to validate_uniqueness_of(:name).scoped_to(:user_id) }"
+    it { is_expected.to validate_uniqueness_of(:name).scoped_to(:user_id) }
     it "allows two users to share a house name" do
       user = FactoryBot.create(:user)
       FactoryBot.create(:house, user: user, name: "Test House")
