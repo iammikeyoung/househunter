@@ -1,20 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe WelcomeController do
-  describe "#index" do
+RSpec.describe WelcomeController, type: :request do
+  describe "Home Page" do
     it "responds successfully" do
-      get :index
+      get root_path
       expect(response).to be_success
-    end
-
-    it "returns a 200 OK status" do
-      get :index
       expect(response).to have_http_status "200"
     end
+  end
 
-    it "renders the index template" do
-      get :index
-      expect(response).to render_template("welcome/index")
+  describe "#index" do
+    it "responds successfully" do
+      get welcome_index_path
+      expect(response).to be_success
+      expect(response).to have_http_status "200"
     end
   end
 end
