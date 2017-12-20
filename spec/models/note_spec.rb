@@ -6,6 +6,15 @@ describe Note do
       note = FactoryBot.build(:note)
       expect(note).to be_valid
     end
+
+    it "uses a sequence for fields requiring uniqueness" do
+      note1 = FactoryBot.create(:note)
+      house = note1.house
+      user = note1.user
+      note2 = FactoryBot.build(:note, user: user, house: house)
+
+      expect(note2).to be_valid
+    end
   end
 
   context "validations" do
