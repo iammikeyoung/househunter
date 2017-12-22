@@ -6,14 +6,13 @@ Rails.application.routes.draw do
 
   resources :welcome, only: [:index]
 
-  resources :users do
-    resources :houses, except: [:index]
+  resources :users, except: [:index] do
+    resources :houses, only: [:new, :create] #or should I set this with '@current_user?'
   end
 
-  resources :houses, only: [:show] do
-    resources :notes
+  resources :houses, except: [:new, :create] do
+    resources :notes, only: [:new, :create]
   end
 
   resources :notes, except: [:new, :create]
-
 end
