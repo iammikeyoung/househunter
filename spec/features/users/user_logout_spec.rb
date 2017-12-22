@@ -23,5 +23,4 @@ feature "User logs out", %{
     expect(page).to have_link("Log In")
     expect(page).to_not have_link("Log Out")
   end
-
 end

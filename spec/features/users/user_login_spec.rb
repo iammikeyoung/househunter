@@ -55,6 +55,4 @@ feature "User log in" do
     expect(page).to have_content("Email")
     expect(page).to have_content("Password")
   end
-
-
 end

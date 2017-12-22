@@ -1,97 +1,47 @@
 require 'rails_helper'
 
 feature "User Updates Account", %{
-  As an authenticated user
-  I want to update my information
-  So that I can keep my profile info correct
-
-  Acceptance Criteria:
-  [ ] Update first Name & last Name
-  [ ] Update email with valid email address
-  [ ] Update password with valid password
-
-} do
-
-  scenario "authenticated user enters invalid information" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
-
-    visit root_path
-    click_link 'Log In'
-    fill_in "Email",    with: "archer@example.gov"
-    fill_in "Password", with: "sploosh1"
-    click_button "Log In"
-    expect(page).to have_link("Update")
-    click_link 'Update'
-
-
-    fill_in "Email", with: ""
-    click_button "Update Account"
-
-    expect(page).to have_current_path("/users/#{user.id}")
-    expect(page).to have_content "Email is invalid"
-  end
+    As an authenticated user
+    I want to update my information
+    So that I can keep my profile info correct
+  } do
+  let(:user) { FactoryBot.create(:user) }
 
   scenario "authenticated user enters valid information" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
-
     visit root_path
-    click_link 'Log In'
-    fill_in "Email",    with: "archer@example.gov"
-    fill_in "Password", with: "sploosh1"
+    within(".nav-desktop") do
+      click_link 'Log In'
+    end
+
+    fill_in "Email",    with: "#{user.email}"
+    fill_in "Password", with: "pass2017"
     click_button "Log In"
-    expect(page).to have_link("Update")
     click_link 'Update'
 
+    fill_in "First Name", with: "Archer"
+    click_button "Save Changes"
 
-    fill_in "First Name", with: "Mr."
-    click_button "Update Account"
-
-    expect(page).to have_current_path("/users/#{user.id}")
     expect(page).to have_content("Profile updated")
-    expect(page).to have_content("Mr.")
+    expect(page).to have_content("Archer")
   end
 
-end
-
-feature "User Deletes Account", %{
-  As an authenticated user
-  I want to delete my account
-  So that my information is no longer retained by the app
-
-  Acceptance Criteria:
-  [ ] User can no longer login with email address & password
-  [ ] User deleted from Users table
-  [ ] User notes are deleted from Notes table
-  [ ] If user is only person associated with Portfolio
-    [ ] Delete portfolio & houses in portfolio
-
-} do
-
-  scenario "authenticated user successfully deletes account" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
-
+  scenario "authenticated user enters invalid information" do
     visit root_path
-    click_link 'Log In'
-    fill_in "Email",    with: "archer@example.gov"
-    fill_in "Password", with: "sploosh1"
+    within(".nav-desktop") do
+      click_link 'Log In'
+    end
+
+    fill_in "Email",    with: "#{user.email}"
+    fill_in "Password", with: "pass2017"
     click_button "Log In"
-    expect(page).to have_link("Delete")
-    click_link 'Delete'
+    click_link 'Update'
 
-    expect(page).to have_current_path("/")
-    expect(page).to have_content("User deleted")
+    fill_in "Last Name", with: ""
+    fill_in "Email", with: "joe@email_mistake"
+    click_button "Save Changes"
+
+    expect(page).to have_content "Last name can't be blank"
+    expect(page).to have_content "Email is invalid"
+    expect(page).to_not have_content "Profile updated"
   end
-
 end
