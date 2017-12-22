@@ -18,8 +18,10 @@ feature "User log in" do
     click_button "Log In"
 
     expect(page).to have_content("You have successfully logged in")
-    expect(page).to_not have_link("Log In")
-    expect(page).to have_link("Log Out")
+    within(".nav-desktop") do
+      expect(page).to_not have_link("Log In")
+      expect(page).to have_link("Log Out")
+    end
   end
 
   scenario "user enters unregistered log in data" do
