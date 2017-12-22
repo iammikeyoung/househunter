@@ -64,7 +64,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       unless current_user?(@user)
         flash[:notice] = "Unauthorized access."
-        redirect_to(root_path)
+        redirect_to @current_user
       end
     end
 
