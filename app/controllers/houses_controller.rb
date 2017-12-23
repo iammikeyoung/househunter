@@ -1,5 +1,5 @@
 class HousesController < ApplicationController
-  before_action :logged_in_user,  only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
   before_action :correct_user,    only: [:show, :edit, :update, :destroy]
 
   def show
@@ -66,7 +66,7 @@ class HousesController < ApplicationController
       @user = @house.user
       unless current_user?(@user)
         flash[:notice] = "Unauthorized access."
-        redirect_to(root_path)
+        redirect_to user_path(current_user)
       end
     end
 end
