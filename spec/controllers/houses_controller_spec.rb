@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :request do
+RSpec.describe "Houses", type: :request do
   subject(:house) { FactoryBot.create(:house) }
   subject(:authorized_user) { house.user }
   subject(:incorrect_user) { FactoryBot.create(:user) }

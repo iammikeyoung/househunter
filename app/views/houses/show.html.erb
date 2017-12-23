@@ -3,8 +3,8 @@
   <div id="house-details-buttons">
     <div class="small button-group">
       <%= link_to "Back", user_path(current_user), class: "button" %>
-      <%= link_to "Edit", edit_user_house_path(current_user), class: "button success" %>
-      <%= link_to "Delete", user_house_path(current_user),  class: "button alert",
+      <%= link_to "Edit", edit_house_path(@house), class: "button success" %>
+      <%= link_to "Delete", house_path(@house),  class: "button alert",
                                                             method: :delete, data: { confirm: "Are you sure?" } %>
     </div>
   </div>
