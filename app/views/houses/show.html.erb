@@ -17,14 +17,14 @@
   <h2>General Info</h2>
   <div class="row">
     <div class="small-12 medium-6 columns left-column">
-      <%= image_tag @house.house_profile_pic.url(:medium) %>
+      <%= image_tag @house.house_profile_pic.url(:medium) if @house.house_profile_pic? %>
       <h4 id="house-name"><%= @house.name %></h4>
-      <p id="house-address"><%= @house.full_address %></p>
+      <p id="house-address"><%= @house.address %></p>
     </div>
     <div class="small-12 medium-6 columns right-column">
       <p><span>Asking Price:</span> $<%= @house.asking_amount %></p>
       <p><span>Total Sqft:</span> <%= @house.total_sqft %></p>
-      <p><span>Price per sqft:</span> $<%= @house.price_per_sqft %></p>
+      <p><span>Price per sqft:</span> $<%= @house.price_per_sqft if @house.asking_amount? %></p>
       <p><span>Overall Impression:</span> </p>
       <p><span>Short list?</span> </p>
     </div>
