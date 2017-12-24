@@ -11,6 +11,6 @@
 </h3>
 
 <p><%= link_to "Back", house_path(@house) %></p>
-<p><%= link_to "Edit", edit_note_path(@note) %></p>
-<p><%= link_to "Delete", note_path(@note),  method: :delete,
+<p><%= link_to "Edit Note", edit_note_path(@note) %></p>
+<p><%= link_to "Delete Note", note_path(@note),  method: :delete,
                                   data: { confirm: "Are you sure?" } %></p>

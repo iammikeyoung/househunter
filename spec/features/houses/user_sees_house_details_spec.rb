@@ -17,6 +17,8 @@ feature "user sees details or a specific house" do
     click_button "Log In"
     click_link "#{user_house1.name}"
 
+    expect(page).to have_link 'Back'
+    expect(page).to have_link 'Add Room'
     expect(page).to have_content(user_house1.name)
     expect(page).to have_content(user_house1.asking_amount)
     expect(page).to have_content(user_house1.total_sqft)
