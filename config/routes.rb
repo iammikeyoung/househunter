@@ -12,5 +12,5 @@ Rails.application.routes.draw do
     resources :notes, only: [:new, :create]
   end
 
-  resources :notes, except: [:new, :create]
+  resources :notes, except: [:index, :new, :create]
 end

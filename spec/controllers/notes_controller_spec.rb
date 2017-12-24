@@ -1,311 +1,244 @@
 require 'rails_helper'
 
-feature "User must be signed in to assess notes" do
+RSpec.describe "Users", type: :request do
+  subject(:user) { FactoryBot.create(:user) }
+  subject(:house) { FactoryBot.create(:house, user: user) }
+  let!(:note) { FactoryBot.create(:note, house: house, user: user) }
+  subject(:incorrect_user) { FactoryBot.create(:user) }
 
-  scenario "unauthenticated user tries to access note show page" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
+  describe "#show" do
+    context "as an authorized user" do
+      it "responds successfully" do
+        post login_path, params: { session: { email: user.email, password: "pass2017" } }
+        get note_path(note.id)
+        aggregate_failures do
+          expect(response).to be_success
+          expect(response).to have_http_status "200"
+        end
+      end
+    end
 
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
+    context "as an incorrect user" do
+      before(:each) do
+        post login_path, params: { session: { email: incorrect_user.email, password: "pass2017" } }
+      end
 
-    # shallow path
-    visit note_path(kitchen)
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
+      it "redirects to user page" do
+        get note_path(note.id)
+        aggregate_failures do
+          expect(response).to have_http_status("302")
+          expect(response).to redirect_to user_path(incorrect_user.id)
+        end
+      end
 
-    # nested path
-    visit house_note_path(house_id: house.id, id: kitchen.id)
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
+      it "provides an 'unauthorized' flash message" do
+        get note_path(note.id)
+
+        expect(flash[:notice]).to match(/Unauthorized access/)
+      end
+    end
+
+    context "as a guest" do
+      it "redirects to the log in page" do
+        get note_path(note.id)
+        aggregate_failures do
+          expect(response).to have_http_status("302")
+          expect(response).to redirect_to login_path
+        end
+      end
+
+      it "provides 'log in' flash message" do
+        get house_path(house.id)
+
+        expect(flash[:notice]).to eq("Please log in.")
+      end
+    end
   end
 
-  scenario "unauthenticated user tries to access note edit page" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
+  describe "#create" do
+    context "as an authorized user" do
+      it "adds a new note" do
+        new_note_params = FactoryBot.attributes_for(:note, house: house, user: user)
+        post login_path, params: { session: { email: user.email, password: "pass2017" } }
 
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
+        expect {
+          post house_notes_path(house.id), params: { note: new_note_params }
+          expect(flash[:notice]).to match(/successfully added/)
+          expect(response).to redirect_to house_path(house.id)
+        }.to change(house.notes, :count).by(1)
+      end
+    end
 
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
+    context "as an incorrect user" do
+      let(:new_note_params) { FactoryBot.attributes_for(:note, house: house, user: user) }
 
-    # shallow path
-    visit edit_note_path(kitchen)
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
+      before(:each) do
+        post login_path, params: { session: { email: incorrect_user.email, password: "pass2017" } }
+      end
 
-    # nested path
-    visit edit_house_note_path(house, kitchen)
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
+      it "does not add a new note" do
+        expect {
+          post house_notes_path(house.id), params: { note: new_note_params }
+        }.to change(user.notes, :count).by(0)
+      end
+
+      it "redirects to user page" do
+        post house_notes_path(house.id), params: { note: new_note_params }
+
+        expect(response).to have_http_status "302"
+        expect(response).to redirect_to user_path(incorrect_user.id)
+      end
+
+      it "provides an 'unauthorized' flash message" do
+        post house_notes_path(house.id), params: { note: new_note_params }
+
+        expect(flash[:notice]).to match(/Unauthorized access/)
+      end
+    end
+
+    context "as a guest" do
+      let(:new_note_params) { FactoryBot.attributes_for(:note, house: house, user: user) }
+
+      it "does not add a new note" do
+        expect {
+          post house_notes_path(house.id), params: { note: new_note_params }
+        }.to change(user.notes, :count).by(0)
+      end
+
+      it "redirects to the log in page" do
+        post house_notes_path(house.id), params: { note: new_note_params }
+
+        expect(response).to have_http_status("302")
+        expect(response).to redirect_to login_path
+      end
+
+      it "provides 'log in' flash message" do
+        post house_notes_path(house.id), params: { note: new_note_params }
+
+        expect(flash[:notice]).to eq("Please log in.")
+      end
+    end
   end
 
-  scenario "unauthenticated user tries to access note update page" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
+  describe "#update" do
+    let(:note_updates) { FactoryBot.attributes_for(:note, room: "New Room Name") }
 
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
+    context "as an authorized user" do
+      it "updates the note" do
+        post login_path, params: { session: { email: user.email, password: "pass2017" } }
+        patch note_path(note.id), params: { note: note_updates }
 
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
+        expect(note.reload.room).to eq("New Room Name")
+        expect(flash[:notice]).to match(/successfully updated/)
+      end
+    end
 
-    # shallow path
-    page.driver.submit :patch, note_path(kitchen), {}
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
+    context "as an incorrect user" do
+      before(:each) do
+        post login_path, params: { session: { email: incorrect_user.email, password: "pass2017" } }
+      end
 
-    # nested path
-    page.driver.submit :patch, house_note_path(house, kitchen), {}
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
+      it "does not update the note" do
+        patch note_path(note.id), params: { note: note_updates }
+
+        expect(note.reload.room).to_not eq("New Room Name")
+        expect(note.reload.room).to eq(note.room)
+      end
+
+      it "redirects to user page" do
+        patch note_path(note.id), params: { note: note_updates }
+
+        expect(response).to have_http_status("302")
+        expect(response).to redirect_to user_path(incorrect_user.id)
+      end
+
+      it "provides 'unauthorized' flash message" do
+        patch note_path(note.id), params: { note: note_updates }
+
+        expect(flash[:notice]).to match(/Unauthorized access/)
+      end
+    end
+
+    context "as a guest" do
+      it "does not update the house" do
+        patch note_path(note.id), params: { note: note_updates }
+
+        expect(note.reload.room).to_not eq("New Room Name")
+        expect(note.reload.room).to eq(note.room)
+      end
+
+      it "redirects to log in page" do
+        patch note_path(note.id), params: { note: note_updates }
+
+        expect(response).to have_http_status("302")
+        expect(response).to redirect_to login_path
+      end
+
+      it "provides 'log in' flash message" do
+        patch note_path(note.id), params: { note: note_updates }
+
+        expect(flash[:notice]).to match(/Please log in/)
+      end
+    end
   end
 
-  scenario "unauthenticated user tries to access note destroy page" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
+  describe "#destroy" do
+    context "as an authorized user" do
+      it "deletes the note" do
+        post login_path, params: { session: { email: user.email, password: "pass2017" } }
 
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
+        expect {
+          delete note_path(note.id)
+          expect(flash[:notice]).to match(/successfully deleted/)
+          expect(response).to redirect_to house_path(house.id)
+        }.to change(house.notes, :count).by(-1)
+      end
+    end
 
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
+    context "as in incorrect user" do
+      before(:each) do
+        post login_path, params: { session: { email: incorrect_user.email, password: "pass2017" } }
+      end
 
-    # shallow path
-    page.driver.submit :delete, note_path(kitchen), {}
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
+      it "does not delete the note" do
+        expect {
+          delete note_path(note.id)
+        }.to change(house.notes, :count).by(0)
+      end
 
-    # nested path
-    page.driver.submit :delete, house_note_path(house, kitchen), {}
-    expect(page).to have_content("Please log in.")
-    expect(page).to have_current_path(login_path)
-  end
-end
+      it "redirects to user page" do
+        delete note_path(note.id)
 
+        expect(response).to have_http_status("302")
+        expect(response).to redirect_to user_path(incorrect_user.id)
+      end
 
-feature "Correct user must be signed in to assess notes" do
+      it "provides 'unauthorized' flash message" do
+        delete note_path(note.id)
 
-  scenario "signed in user tries to view another user's note" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
+        expect(flash[:notice]).to match(/Unauthorized access/)
+      end
+    end
 
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
+    context "as a guest" do
+      it "does not delete the note" do
+        expect {
+          delete note_path(note.id)
+        }.to change(house.notes, :count).by(0)
+      end
 
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
+      it "redirects to log in page" do
+        delete note_path(note.id)
 
-    wrong_user = User.create!(email: "joe_schmoe@email.com",
-                          password: "supersecret007",
-                          password_confirmation: "supersecret007",
-                          first_name: "Joe",
-                          last_name: "Schmoe")
+        expect(response).to have_http_status("302")
+        expect(response).to redirect_to login_path
+      end
 
-    visit root_path
-    click_link('Log In', match: :first)
-    fill_in "Email",    with: "joe_schmoe@email.com"
-    fill_in "Password", with: "supersecret007"
-    click_button "Log In"
+      it "provides 'log in' flash message" do
+        delete note_path(note.id)
 
-    # Shallow route
-    visit note_path(kitchen)
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
-
-    # Nested route
-    visit house_note_path(house, kitchen)
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
-  end
-
-  scenario "signed in user tries to edit another user's note" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
-
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
-
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
-
-    wrong_user = User.create!(email: "joe_schmoe@email.com",
-                        password: "supersecret007",
-                        password_confirmation: "supersecret007",
-                        first_name: "Joe",
-                        last_name: "Schmoe")
-
-    visit root_path
-    click_link('Log In', match: :first)
-    fill_in "Email",    with: "joe_schmoe@email.com"
-    fill_in "Password", with: "supersecret007"
-    click_button "Log In"
-
-    # Shallow route
-    visit edit_note_path(kitchen)
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
-
-    # Nested route
-    visit edit_house_note_path(house, kitchen)
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
-  end
-
-  scenario "signed in user tries to update another user's note" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
-
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
-
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
-
-    wrong_user = User.create!(email: "joe_schmoe@email.com",
-                        password: "supersecret007",
-                        password_confirmation: "supersecret007",
-                        first_name: "Joe",
-                        last_name: "Schmoe")
-
-    visit root_path
-    click_link('Log In', match: :first)
-    fill_in "Email",    with: "joe_schmoe@email.com"
-    fill_in "Password", with: "supersecret007"
-    click_button "Log In"
-
-    # Shallow route
-    page.driver.submit :patch, note_path(kitchen), {}
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
-
-    # Nested route
-    page.driver.submit :patch, house_note_path(house, kitchen), {}
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
-  end
-
-  scenario "signed in user tries to destroy another user's note" do
-    user = User.create!(email: "archer@example.gov",
-                        password: "sploosh1",
-                        password_confirmation: "sploosh1",
-                        first_name: "Sterling",
-                        last_name: "Archer")
-
-    house = House.create!(user: user,
-                              name: "Near Work",
-                              street: "101 Arch Street",
-                              city: "Boston",
-                              state: "MA",
-                              zip_code: "02110")
-
-    kitchen = Note.create!(house: house,
-                              user: user,
-                              room: "Kitchen",
-                              rating: -1,
-                              pros: "lots of cabinet space and good flow into sun room",
-                              cons: "gallery style - too small")
-
-    wrong_user = User.create!(email: "joe_schmoe@email.com",
-                        password: "supersecret007",
-                        password_confirmation: "supersecret007",
-                        first_name: "Joe",
-                        last_name: "Schmoe")
-
-    visit root_path
-    click_link('Log In', match: :first)
-    fill_in "Email",    with: "joe_schmoe@email.com"
-    fill_in "Password", with: "supersecret007"
-    click_button "Log In"
-
-    # Shallow route
-    page.driver.submit :delete, note_path(kitchen), {}
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
-
-    # Nested route
-    page.driver.submit :delete, house_note_path(house, kitchen), {}
-    expect(page).to have_content("Unauthorized access.")
-    expect(page).to have_current_path(user_path(wrong_user))
+        expect(flash[:notice]).to match(/Please log in/)
+      end
+    end
   end
 end

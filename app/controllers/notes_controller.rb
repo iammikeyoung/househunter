@@ -63,12 +63,14 @@ class NotesController < ApplicationController
 
     # Confirms the correct user.
     def correct_user
-      @note = Note.find(params[:id])
-      @user = @note.user
-      unless current_user?(@user)
+      if !params[:house_id].nil? # check first because only used in new or create
+        submitted_user_id = House.find(params[:house_id]).user
+      else
+        submitted_user_id = Note.find(params[:id]).user
+      end
+      unless current_user?(submitted_user_id)
         flash[:notice] = "Unauthorized access."
         redirect_to @current_user
       end
     end
-
 end
