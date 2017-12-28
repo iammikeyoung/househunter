@@ -1,16 +1,21 @@
-<h1>Note Show Page</h1>
+
+<div class="note-details-top">
+  <h1>Note Details</h1>
+  <div id="note-details-buttons">
+    <div class="small button-group">
+      <%= link_to "Back", house_path(@note.house), class: "button" %>
+      <%= link_to "Edit", edit_note_path(@note), class: "button success" %>
+      <%= link_to "Delete", note_path(@note),  class: "button alert",
+                                                            method: :delete, data: { confirm: "Are you sure?" } %>
+    </div>
+  </div>
+</div>
+
 <%= flash[:notice] %>
 
-<h1>Notes For <%= @note.room %></h1>
-<h3>
-  <ul>
-    <li>Rating: <%= @note.rating %></li>
-    <li>Pros: <%= @note.pros %></li>
-    <li>Cons: <%= @note.cons %></li>
-  </ul>
-</h3>
-
-<p><%= link_to "Back", house_path(@house) %></p>
-<p><%= link_to "Edit Note", edit_note_path(@note) %></p>
-<p><%= link_to "Delete Note", note_path(@note),  method: :delete,
-                                  data: { confirm: "Are you sure?" } %></p>
+<div class="note-layout">
+  <h3>Notes For <%= @note.room %></h3>
+  <h5><span>Rating:</span> <%= @note.rating %></h5>
+  <h5><span>Pros:</span> <%= @note.pros %></h5>
+  <h5><span>Cons:</span> <%= @note.cons %></h5>
+</div>

@@ -443,6 +443,43 @@ footer a span {
 }
 
 
+/*********************
+  NOTE_ SHOW PAGE
+*********************/
+
+.note-details-top,
+.note-layout h3 {
+  padding: 1.5rem 2.5%;
+}
+
+.note-details-top h1 {
+  display: inline-block;
+  margin: 0;
+}
+
+#note-details-buttons {
+  display: inline-block;
+  margin-bottom: 0;
+  margin-left: 5%;
+}
+
+#note-details-buttons .button-group {
+  margin-bottom: 0;
+}
+
+#note-details-buttons .button {
+  border-radius: 5px;
+}
+
+.note-layout h5 {
+  padding: 1% 5%;
+}
+
+.note-layout span {
+  font-weight: bold;
+}
+
+
 /**************************
   NEW & EDIT NOTE_FORM
 ***************************/
