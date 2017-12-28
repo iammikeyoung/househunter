@@ -57,4 +57,37 @@ describe Note do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:house) }
   end
+
+  context "instance methods" do
+    let(:note) { FactoryBot.create(:note, rating: 0) }
+
+    describe "#rating_string" do
+      it "returns a string for a note rating" do
+        expect(note.rating_string).to be_a(String)
+      end
+
+      it "returns 'Like' when rating is 1" do
+        note.rating = 1
+        expect(note.rating_string).to eq("Like")
+      end
+
+      it "returns 'Dislike' when rating is -1" do
+        note.rating = -1
+        expect(note.rating_string).to eq("Dislike")
+      end
+
+      it "returns 'Neutral' when rating is 0" do
+        note.rating = 0
+        expect(note.rating_string).to eq("Neutral")
+      end
+
+      it "returns empty string when rating is any other value" do
+        note.rating = 2
+        expect(note.rating_string).to eq("")
+
+        note.rating = -2
+        expect(note.rating_string).to eq("")
+      end
+    end
+  end
 end
